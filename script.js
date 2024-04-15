@@ -24,12 +24,12 @@ function init() {
     let carGeometry = new THREE.BoxGeometry(5, 2, 3);
     let carMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     car = new THREE.Mesh(carGeometry, carMaterial);
-    car.position.set(0, 1, -180); // Starting position at the beginning of the track
+    car.position.set(0, 1, -180);
     scene.add(car);
 
     // Create obstacles
     obstacles = [];
-    for (let i = 0; i <=400; i++) {
+    for (let i = 0; i <=100; i++) {
         let obstacle = createObstacle();
         scene.add(obstacle);
         obstacles.push(obstacle);
@@ -83,10 +83,11 @@ timerInterval = setInterval(updateTimer, 1000);
 obstacles.forEach(obstacle => scene.remove(obstacle));
 obstacles = [];
 for (let i = 0; i < 100; i++) {
-let obstacle = createObstacle();
-scene.add(obstacle);
-obstacles.push(obstacle);
+    let obstacle = createObstacle();
+    scene.add(obstacle);
+    obstacles.push(obstacle);
 }
+
 // Réinitialiser l'état des touches
 keys = {};
 }
@@ -101,10 +102,10 @@ function animate() {
 // Update game logic
 function update() {
     // Move car based on keyboard input
-    if (keys.ArrowUp) car.position.z -= 0.5;
-    if (keys.ArrowDown) car.position.z += 0.5;
-    if (keys.ArrowLeft) car.position.x -= 0.5;
-    if (keys.ArrowRight) car.position.x += 0.5;
+    if (keys.ArrowUp) car.position.z += 0.5;
+    if (keys.ArrowDown) car.position.z -= 0.5;
+    if (keys.ArrowLeft) car.position.x += 0.5;
+    if (keys.ArrowRight) car.position.x -= 0.5;
 
     // Check collisions with obstacles
     obstacles.forEach(obstacle => {
