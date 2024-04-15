@@ -1,24 +1,18 @@
-
 import * as THREE from 'three';
 
-
 let track, startLine, finishLine, obstacles = [];
-
 const scene = new THREE.Scene();
 const viewportSize = {
     width: 800,
     height: 600
 };
 
-
 const camera = new THREE.PerspectiveCamera(
     100,
     viewportSize.width / viewportSize.height
 );
 
-
 const canvas = document.querySelector('canvas#webgl');
-
 
 const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -27,7 +21,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(viewportSize.width, viewportSize.height);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-
 
 const FondTexture = new THREE.TextureLoader().load(`img/fff.jpg`);
 scene.background = FondTexture;
@@ -40,13 +33,11 @@ loader.load([
     console.error('An error occurred while loading the skybox texture:', error);
 });
 
-
 const textureLoader = new THREE.TextureLoader();
 const groundTexture = textureLoader.load('img/Stylized_Stone_Floor_005_basecolor.jpg');
 groundTexture.wrapS = THREE.RepeatWrapping;
 groundTexture.wrapT = THREE.RepeatWrapping;
 groundTexture.repeat.set(10, 10);
-
 
 const groundMaterial = new THREE.MeshBasicMaterial({ map: groundTexture });
 const groundGeometry = new THREE.PlaneGeometry(200, 200);
@@ -54,9 +45,8 @@ const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
 groundMesh.rotation.x = -Math.PI / 2;
 scene.add(groundMesh);
 
-
 createTrack();
-let car= [];
+let car = [];
 
 // voiture
 const carTexture = new THREE.TextureLoader().load('img/car-top-view-clipart-design-illustration-free-png.webp');
@@ -66,7 +56,6 @@ car = new THREE.Mesh(carGeometry, carMaterial);
 car.position.set(0, 1, -85);
 car.crossedFinish = false;
 scene.add(car);
-
 
 // depart
 let startLineGeometry = new THREE.PlaneGeometry(10, 50);
@@ -91,9 +80,8 @@ scene.add(finishLine);
 camera.position.set(0, 10, -20);
 camera.lookAt(car.position);
 
-
 // chrono
-let  timerInter;
+let timerInter;
 let startTime;
 startTime = Date.now();
 timerInter = setInterval(updateTimer, 1000);
@@ -121,8 +109,6 @@ function createObstacle(x, z) {
     obstacles.push(obstacle);
 }
 
-
-
 // creation circuit
 function createTrack() {
     let trackGeometry = new THREE.CircleGeometry(0, 0);
@@ -139,8 +125,8 @@ function createTrack() {
         let angle = (i / numBarriers) * Math.PI * 2;
         let x = radius * Math.cos(angle);
         let z = radius * Math.sin(angle);
-        let barrierGeometry = new THREE.BoxGeometry(1, barrierHeight, 17);
-        let barrier = new THREE.Mesh(barrierGeometry, BarriereMaterial);
+        let barriereGeometry = new THREE.BoxGeometry(1, barrierHeight, 17);
+        let barrier = new THREE.Mesh(barriereGeometry, BarriereMaterial);
         barrier.position.set(x, barrierHeight / 2, z);
         barrier.rotation.y = -angle;
         scene.add(barrier);
@@ -154,8 +140,8 @@ function createTrack() {
         let angle = (i / innerNumBarriers) * Math.PI * 2;
         let x = innerRadius * Math.cos(angle);
         let z = innerRadius * Math.sin(angle);
-        let barrierGeometry = new THREE.BoxGeometry(1, barrierHeight, 20);
-        let barrier = new THREE.Mesh(barrierGeometry, innerBarrier);
+        let barriereGeometry = new THREE.BoxGeometry(1, barrierHeight, 20);
+        let barrier = new THREE.Mesh(barriereGeometry, innerBarrier);
         barrier.position.set(x, barrierHeight / 2, z);
         barrier.rotation.y = -angle;
         scene.add(barrier);
@@ -179,7 +165,6 @@ function createTrack() {
     createObstacle(-70, -30);
     createObstacle(65, -10);
 }
-
 
 let keys = {};
 // reset jeu
@@ -247,10 +232,7 @@ function checkFinishLine() {
     }
 }
 
-
-
-
-// permet gestionnaire evenement clavier
+//  gestionnaire evenement clavier
 window.addEventListener('keydown', e => { keys[e.code] = true; });
 window.addEventListener('keyup', e => { keys[e.code] = false; });
 
