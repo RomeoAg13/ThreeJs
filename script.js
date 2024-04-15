@@ -64,7 +64,7 @@ const carMaterial = new THREE.MeshBasicMaterial({ map: carTexture });
 const carGeometry = new THREE.BoxGeometry(2, 1, 6);
 car = new THREE.Mesh(carGeometry, carMaterial);
 car.position.set(0, 1, -85);
-car.hasCrossedFinishLine = false;
+car.crossedFinish = false;
 scene.add(car);
 
 
@@ -93,10 +93,10 @@ camera.lookAt(car.position);
 
 
 // chrono
-let  timerInterval;
+let  timerInter;
 let startTime;
 startTime = Date.now();
-timerInterval = setInterval(updateTimer, 1000);
+timerInter = setInterval(updateTimer, 1000);
 function animate() {
     requestAnimationFrame(animate);
     update();
@@ -131,7 +131,7 @@ function createTrack() {
     track.rotation.x = -Math.PI / 2;
     scene.add(track);
 
-    let outerBarrierMaterial = new THREE.MeshBasicMaterial({ color: 0x2e2017 });
+    let BarriereMaterial = new THREE.MeshBasicMaterial({ color: 0x2e2017 });
     let numBarriers = 36;
     let radius = 95;
     let barrierHeight = 5;
@@ -140,14 +140,14 @@ function createTrack() {
         let x = radius * Math.cos(angle);
         let z = radius * Math.sin(angle);
         let barrierGeometry = new THREE.BoxGeometry(1, barrierHeight, 17);
-        let barrier = new THREE.Mesh(barrierGeometry, outerBarrierMaterial);
+        let barrier = new THREE.Mesh(barrierGeometry, BarriereMaterial);
         barrier.position.set(x, barrierHeight / 2, z);
         barrier.rotation.y = -angle;
         scene.add(barrier);
         obstacles.push(barrier);
     }
 
-    let innerBarrierMaterial = new THREE.MeshBasicMaterial({ color: 0x2e2017 });
+    let innerBarrier = new THREE.MeshBasicMaterial({ color: 0x2e2017 });
     let innerNumBarriers = 36;
     let innerRadius = 60;
     for (let i = 0; i < innerNumBarriers; i++) {
@@ -155,7 +155,7 @@ function createTrack() {
         let x = innerRadius * Math.cos(angle);
         let z = innerRadius * Math.sin(angle);
         let barrierGeometry = new THREE.BoxGeometry(1, barrierHeight, 20);
-        let barrier = new THREE.Mesh(barrierGeometry, innerBarrierMaterial);
+        let barrier = new THREE.Mesh(barrierGeometry, innerBarrier);
         barrier.position.set(x, barrierHeight / 2, z);
         barrier.rotation.y = -angle;
         scene.add(barrier);
@@ -163,13 +163,20 @@ function createTrack() {
     }
 
     createObstacle(80, 0);
+    createObstacle(50, -50);
+    createObstacle(50, -70);
     createObstacle(0, 65);
     createObstacle(30, -70);
     createObstacle(-50, 50);
     createObstacle(-20, 80);
     createObstacle(-80, 20);
     createObstacle(10, 70);
+    createObstacle(60, 40);
+    createObstacle(50, 60);
     createObstacle(-60, -20);
+    createObstacle(-60, -50);
+    createObstacle(-70, -10);
+    createObstacle(-70, -30);
     createObstacle(65, -10);
 }
 
@@ -178,10 +185,10 @@ let keys = {};
 // reset jeu
 function resetGame() {
     car.position.set(0, 1, -85);
-    car.hasCrossedFinishLine = false;
+    car.crossedFinish = false;
     startTime = Date.now();
-    clearInterval(timerInterval);
-    timerInterval = setInterval(updateTimer, 1000);
+    clearInterval(timerInter);
+    timerInter = setInterval(updateTimer, 1000);
     keys = {};
 }
 
@@ -221,21 +228,21 @@ function update() {
 
 // maj camera 
 function updateCamera() {
-    let relativeCameraOffset = new THREE.Vector3(0, 10, -20);
-    let cameraOffset = relativeCameraOffset.applyMatrix4(car.matrixWorld);
+    let relatCam = new THREE.Vector3(0, 10, -20);
+    let cameraOffset = relatCam.applyMatrix4(car.matrixWorld);
     camera.position.copy(cameraOffset);
     camera.lookAt(car.position);
 }
 
 // check la ligne arrivee
 function checkFinishLine() {
-    const distanceToFinishLine = car.position.distanceTo(new THREE.Vector3(finishLine.position.x, car.position.y, finishLine.position.z));
-    const withinFinishLineThreshold = distanceToFinishLine < 5;
+    const distanceFinish = car.position.distanceTo(new THREE.Vector3(finishLine.position.x, car.position.y, finishLine.position.z));
+    const FinishLIne = distanceFinish < 5;
     let points = 100000 / ResetTime;
 
-    if (withinFinishLineThreshold && !car.hasCrossedFinishLine) {
+    if (FinishLIne && !car.crossedFinish) {
         alert(`Race completed! Your time: ${ResetTime}s\nScore : ${points}`);
-        car.hasCrossedFinishLine = true;
+        car.crossedFinish = true;
         resetGame();
     }
 }
