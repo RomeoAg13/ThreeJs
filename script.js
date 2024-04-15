@@ -86,6 +86,18 @@ function updateTimer() {
     timerElement.textContent = `Time: ${ResetTime}s`;
 }
 
+
+function createObstacle(x, z) {
+    let obstacleGeometry = new THREE.BoxGeometry(10, 10, 10); // Customize the size of the obstacle
+    let obstacleMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff }); // Customize the color of the obstacle
+    let obstacle = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
+    obstacle.position.set(x, 5, z); // Set the position of the obstacle
+    scene.add(obstacle);
+    obstacles.push(obstacle);
+}
+
+
+
 // Function to create the circular track
 function createTrack() {
     // Create track (circular)
@@ -127,6 +139,16 @@ function createTrack() {
         scene.add(barrier);
         obstacles.push(barrier);
     }
+
+    createObstacle(80, 0);
+    createObstacle(0, 80);
+    createObstacle(30, -80);
+    createObstacle(-50, 80);
+    createObstacle(-20, 80);
+    createObstacle(-80, 0);
+    createObstacle(60, 30);
+    createObstacle(-60, -30);
+
 }
 
 // Function to reset the game
