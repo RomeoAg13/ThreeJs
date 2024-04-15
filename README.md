@@ -3,5 +3,5 @@ Jeu de course en three js avec obstacle, circuit, colision, ligne de départ et 
 
 
 
- fait par Tomic Andrija, Feki Mohammed Karim, Agostino Roméo.
+ fait par Tomic Andrija, Feki Mohamed Karim, Agostino Roméo.
 
