@@ -59,12 +59,14 @@ createTrack();
 let car= [];
 
 // voiture
-let carGeometry = new THREE.BoxGeometry(2, 3, 6);
-let carMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const carTexture = new THREE.TextureLoader().load('img/car-top-view-clipart-design-illustration-free-png.webp');
+const carMaterial = new THREE.MeshBasicMaterial({ map: carTexture });
+const carGeometry = new THREE.BoxGeometry(2, 1, 6);
 car = new THREE.Mesh(carGeometry, carMaterial);
 car.position.set(0, 1, -85);
 car.hasCrossedFinishLine = false;
 scene.add(car);
+
 
 // depart
 let startLineGeometry = new THREE.PlaneGeometry(10, 50);
