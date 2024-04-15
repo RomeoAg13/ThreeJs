@@ -30,7 +30,7 @@ loader.load([
 ], function(texture) {
     scene.background = texture;
 }, undefined, function(error) {
-    console.error('An error occurred while loading the skybox texture:', error);
+    console.error('error:', error);
 });
 
 const textureLoader = new THREE.TextureLoader();
